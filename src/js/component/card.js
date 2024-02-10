@@ -43,12 +43,12 @@ const Card = (props) => {
             </div>
           </div>
           <div className="col-3 p-3">
-            <a href="#" className="btn pe-5">
+            <button href="#" className="btn pe-5">
               <FontAwesomeIcon icon={faPencilAlt} size="lg" />
-            </a>
-            <a href="#" className="btn ps-3">
+            </button>
+            <button href="#" className="btn ps-3" onClick={props.deleteId}>
               <FontAwesomeIcon icon={faTrash} size="lg" />
-            </a>
+            </button>
           </div>
         </div>
       </div>

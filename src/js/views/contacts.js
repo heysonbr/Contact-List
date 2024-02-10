@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Card from "../component/card";
+import { Context } from "../store/appContext";
 
-// const [name, setName] = useState("");
-// const [email, setEmail] = useState("");
-// const [phone, setPhone] = useState("");
-// const [address, setAddress] = useState("");
+const ContactList = () => {
+  //CALLING THE CONTEXT
 
-const contactList = () => {
+  const { store, actions } = useContext(Context);
+  useEffect(() => {
+    actions.getContacts();
+    actions.deleteContact();
+  }, []);
+
   return (
     <div className="container">
       <div className="d-flex justify-content-end m-2 pb-2">
@@ -19,16 +23,22 @@ const contactList = () => {
       </div>
 
       <div>
-        <Card
-          full_name="HOla HOla"
-          address="calle del mar"
-          phone="9712470"
-          email="info@xps.cat"
-          img="https://via.placeholder.com/150"
-        />
+        {store.contacts.map((contact, index) => {
+          return (
+            <Card
+              key={index}
+              full_name={contact.full_name}
+              address={contact.address}
+              phone={contact.phone}
+              email={contact.email}
+              img={contact.img || "https://via.placeholder.com/150"}
+              deleteId={() => actions.deleteContact(contact.id)}
+            />
+          );
+        })}
       </div>
     </div>
   );
 };
 
-export default contactList;
+export default ContactList;
