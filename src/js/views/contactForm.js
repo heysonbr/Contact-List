@@ -29,14 +29,13 @@ const ContactForm = () => {
             <Form.Control type="text" placeholder="Enter address" />
           </Form.Group>
         </Form>
+        <div className="d-grid gap-2">
+          <Button className="btn btn-primary">Save</Button>
+        </div>
       </div>
 
-      <div className="d-flex justify-content-center">
-        <Button variant="primary">Save</Button>
-      </div>
-
-      <div className="container">
-        <Link to="/contact-list">or get back to contacts</Link>
+      <div className="container pt-3 ">
+        <Link to="/">or get back to contacts</Link>
       </div>
     </div>
   );

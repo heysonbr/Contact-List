@@ -25,13 +25,13 @@ const Layout = () => {
           {/* <Navbar /> */}
           <Routes>
             <Route path="/form" element={<ContactForm />} />
-            <Route path="/contact-list" element={<ContactList />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/demo" element={<Demo />} />
-            <Route path="/single/:theid" element={<Single />} />
+            <Route path="/" element={<ContactList />} />
+            {/* <Route path="/" element={<Home />} /> */}
+            {/* <Route path="/demo" element={<Demo />} />
+            <Route path="/single/:theid" element={<Single />} /> */}
             <Route path="*" element={<h1>Not found!</h1>} />
           </Routes>
-          <Footer />
+          {/* <Footer /> */}
         </ScrollToTop>
       </BrowserRouter>
     </div>

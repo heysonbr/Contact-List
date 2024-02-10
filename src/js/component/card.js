@@ -1,33 +1,55 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLocationArrow,
+  faPhone,
+  faEnvelope,
+  faPencilAlt,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
-const Card = () => {
+const Card = (props) => {
   return (
-    <div className="m-2">
-      <div
-        className="border d-flex flex-row"
-        style={{ width: "100%", height: "10rem" }}
-      >
-        <div className="container mt-2 mb-2">
-          <img
-            src="https://media.licdn.com/dms/image/D4D03AQF-pjuxDYqkYw/profile-displayphoto-shrink_400_400/0/1663532698544?e=1712793600&v=beta&t=SJyKLzzBaW71ANw28Ysm7O5Twiw1zFKQxa6NBi_wbiM"
-            className="card-img-left rounded-circle w-25 h-100"
-            alt="..."
-          />
-        </div>
-
-        <div className="card-body">
-          <h5 className="card-title">David Pardo</h5>
-          <p className="card-text">Tietar 5</p>
-          <p className="card-text">618303391</p>
-          <p className="card-text">davidpardomartin@gmail.com</p>
-        </div>
-        <div className="d-flex flex-row h-25">
-          <a href="#" className="btn btn-primary">
-            Go somewhere
-          </a>
-          <a href="#" className="btn btn-primary">
-            Go somewhere
-          </a>
+    <div className="container d-flex justify-content-center align-items-center ">
+      <div className="card w-100 h-20" style={{ height: "200px" }}>
+        <div className="row no-gutters">
+          <div className="col-3">
+            <img
+              src={props.img}
+              className="ps-5 p-3 rounded-circle  "
+              style={{ height: "200px" }}
+              alt="..."
+            />
+          </div>
+          <div className="col-6">
+            <div className="card-body">
+              <h5 className="card-title pb-3 ">{props.full_name}</h5>
+              <p className="card-text text-secondary fw-bolder">
+                <FontAwesomeIcon
+                  icon={faLocationArrow}
+                  size="lg"
+                  className="pe-4"
+                />
+                {props.address}
+              </p>
+              <p className="card-text text-secondary fw-bolder">
+                <FontAwesomeIcon icon={faPhone} size="lg" className="pe-4" />
+                {props.phone}
+              </p>
+              <p className="card-text text-secondary fw-bolder">
+                <FontAwesomeIcon icon={faEnvelope} size="lg" className="pe-4" />
+                {props.email}
+              </p>
+            </div>
+          </div>
+          <div className="col-3 p-3">
+            <a href="#" className="btn pe-5">
+              <FontAwesomeIcon icon={faPencilAlt} size="lg" />
+            </a>
+            <a href="#" className="btn ps-3">
+              <FontAwesomeIcon icon={faTrash} size="lg" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
