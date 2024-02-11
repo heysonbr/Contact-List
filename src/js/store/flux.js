@@ -19,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const data = await response.json();
             setStore({ contacts: data });
-            console.log("Contactos obtenidos exitosamente:", data);
+            // console.log("Contactos obtenidos exitosamente:", data);
           } else {
             console.error("Error al obtener los contactos");
           }
@@ -51,6 +51,43 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error al realizar la solicitud:", error);
         }
       },
+      updateContact: async (contact, id) => {
+        try {
+          const response = await fetch(
+            `https://playground.4geeks.com/apis/fake/contact/${id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                full_name: contact.full_name,
+                email: contact.email,
+                agenda_slug: "heysonb-agenda", // Asegúrate de reemplazar esto con el valor correcto
+                address: contact.address,
+                phone: contact.phone,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          const data = await response.json();
+
+          setStore((prevState) => {
+            const updatedContacts = prevState.contacts.map((c) =>
+              c.id === id ? data : c
+            );
+            return { ...prevState, contacts: updatedContacts };
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      },
+
+      //
       deleteContact: async (id) => {
         try {
           const requestOptions = {

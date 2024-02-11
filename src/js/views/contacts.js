@@ -9,8 +9,7 @@ const ContactList = () => {
   const { store, actions } = useContext(Context);
   useEffect(() => {
     actions.getContacts();
-    actions.deleteContact();
-  }, []);
+  }, [store.contacts]);
 
   return (
     <div className="container">
@@ -26,7 +25,8 @@ const ContactList = () => {
         {store.contacts.map((contact, index) => {
           return (
             <Card
-              key={index}
+              key={contact.id}
+              id={contact.id}
               full_name={contact.full_name}
               address={contact.address}
               phone={contact.phone}

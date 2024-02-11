@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "../../styles/home.css";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -6,6 +7,7 @@ import { Context } from "../store/appContext";
 
 const ContactForm = () => {
   const { store, actions } = useContext(Context);
+  const { contactId } = useParams(); // obtener la ID del contacto de los parámetros de la ruta
 
   const [contact, setContact] = useState({
     full_name: "",
@@ -15,13 +17,30 @@ const ContactForm = () => {
     agenda_slug: "heysonb-agenda",
   });
 
+  useEffect(() => {
+    if (contactId) {
+      const existingContact = store.contacts.find(
+        (contact) => contact.id === contactId
+      );
+      if (existingContact) setContact(existingContact);
+    }
+  }, [store.contacts, contactId]);
+
   const handleChange = (e) => {
     setContact({ ...contact, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions.addContact(contact);
+    try {
+      if (contactId) {
+        await actions.modifiContact(contact, contactId);
+      } else {
+        await actions.addContact(contact);
+      }
+    } catch (error) {
+      console.error("Error al guardar el contacto:", error);
+    }
   };
 
   return (
