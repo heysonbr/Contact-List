@@ -106,6 +106,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else {
             console.error("Error al eliminar el contacto");
           }
+          // alert("The contact is saved. If you want to do more, use again."); LO he cambiado por un toast
         } catch (error) {
           console.error("Error al realizar la solicitud:", error);
         }

@@ -10,6 +10,8 @@ import {
 import { Link, Modal, Button, Form } from "react-bootstrap";
 import { useContext } from "react";
 import { Context } from "../store/appContext"; // Asegúrate de importar tu contexto
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Card = (props) => {
   const { actions } = useContext(Context); // Obtén las acciones de tu contexto
@@ -51,6 +53,7 @@ const Card = (props) => {
       .updateContact(contact, props.id)
       .then(() => {
         handleClose();
+        toast.success("Contact Updated!");
       })
       .catch((error) => {
         console.error("Error updating contact:", error);
@@ -94,7 +97,14 @@ const Card = (props) => {
             <button className="btn pe-5" onClick={handleShow}>
               <FontAwesomeIcon icon={faPencilAlt} size="lg" />
             </button>
-            <button href="#" className="btn ps-3" onClick={props.deleteId}>
+            <button
+              href="#"
+              className="btn ps-3"
+              onClick={() => {
+                props.deleteId();
+                toast.danger("Contact Deleted!");
+              }}
+            >
               <FontAwesomeIcon icon={faTrash} size="lg" />
             </button>
           </div>

@@ -38,6 +38,14 @@ const ContactForm = () => {
       } else {
         await actions.addContact(contact);
       }
+      alert("The contact is saved. If you want to do more, use again.");
+      setContact({
+        full_name: "",
+        email: "",
+        phone: "",
+        address: "",
+        agenda_slug: "heysonb-agenda",
+      });
     } catch (error) {
       console.error("Error al guardar el contacto:", error);
     }

@@ -1,0 +1,6 @@
+.Toastify__toast-container {
+  top: 1% !important;
+  transform: translateY(-50%);
+  left: 50% !important;
+  margin-left: -160px;
+}
