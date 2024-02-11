@@ -111,6 +111,42 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error al realizar la solicitud:", error);
         }
       },
+      createRandomContact: async () => {
+        fetch("https://randomuser.me/api/")
+          .then((response) => response.json())
+          .then((data) => {
+            const { name, phone, email, location } = data.results[0];
+
+            const postData = {
+              full_name: `${name.first} ${name.last}`,
+              phone: phone,
+              email: email,
+              address: `${location.street.number} ${location.street.name}, ${location.city}, ${location.state}, ${location.country}`,
+              agenda_slug: "heysonb-agenda", // Asegúrate de que este es el slug correcto de la agenda
+            };
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: JSON.stringify(postData),
+              redirect: "follow",
+            };
+
+            fetch(
+              "https://playground.4geeks.com/apis/fake/contact/",
+              requestOptions
+            )
+              .then((response) => response.text())
+              .then((result) => console.log(result))
+              .catch((error) => console.log("error", error));
+          })
+          .catch((error) => {
+            console.error("Error al obtener el perfil aleatorio:", error);
+          });
+      },
     },
   };
 };

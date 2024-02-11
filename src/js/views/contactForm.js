@@ -4,6 +4,8 @@ import "../../styles/home.css";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ContactForm = () => {
   const { store, actions } = useContext(Context);
@@ -38,7 +40,7 @@ const ContactForm = () => {
       } else {
         await actions.addContact(contact);
       }
-      alert("The contact is saved. If you want to do more, use again.");
+      toast.success("Contact Created! ");
       setContact({
         full_name: "",
         email: "",

@@ -10,12 +10,13 @@ import {
 import { Link, Modal, Button, Form } from "react-bootstrap";
 import { useContext } from "react";
 import { Context } from "../store/appContext"; // Asegúrate de importar tu contexto
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Card = (props) => {
   const { actions } = useContext(Context); // Obtén las acciones de tu contexto
   const [show, setShow] = useState(false);
+  const [showDelete, setShowDelete] = useState(false); // Nuevo estado para el modal de eliminación
   const [selectedContact, setSelectedContact] = useState(null);
   const [contact, setContact] = useState({
     full_name: "",
@@ -31,6 +32,7 @@ const Card = (props) => {
         email: selectedContact.email,
         phone: selectedContact.phone,
         address: selectedContact.address,
+        img: selectedContact.img,
       });
     }
   }, [selectedContact]);
@@ -59,20 +61,29 @@ const Card = (props) => {
         console.error("Error updating contact:", error);
       });
   };
+  const handleDelete = () => {
+    setShowDelete(true); // Abre el modal de eliminación
+  };
+
+  const confirmDelete = () => {
+    props.deleteId();
+    toast.error("Contact Deleted!");
+    setShowDelete(false); // Cierra el modal de eliminación
+  };
 
   return (
     <div className="container d-flex justify-content-center align-items-center ">
-      <div className="card w-100 h-20" style={{ height: "200px" }}>
+      <div className="card w-100 h-20" style={{ height: "auto" }}>
         <div className="row no-gutters">
-          <div className="col-3">
+          <div className="col-12 col-md-3">
             <img
               src={props.img}
-              className="ps-5 p-3 rounded-circle  "
-              style={{ height: "200px" }}
+              className="ps-5 p-3 rounded-circle"
+              style={{ height: "200px", width: "100%" }}
               alt="..."
             />
           </div>
-          <div className="col-6">
+          <div className="col-12 col-md-6">
             <div className="card-body">
               <h5 className="card-title pb-3 ">{props.full_name}</h5>
               <p className="card-text text-secondary fw-bolder">
@@ -93,24 +104,23 @@ const Card = (props) => {
               </p>
             </div>
           </div>
-          <div className="col-3 p-3">
-            <button className="btn pe-5" onClick={handleShow}>
-              <FontAwesomeIcon icon={faPencilAlt} size="lg" />
-            </button>
-            <button
-              href="#"
-              className="btn ps-3"
-              onClick={() => {
-                props.deleteId();
-                toast.danger("Contact Deleted!");
-              }}
-            >
-              <FontAwesomeIcon icon={faTrash} size="lg" />
-            </button>
+          <div className="col-12 col-md-3 p-3 d-flex flex-column justify-content-between">
+            <div></div>
+            <div className="d-flex justify-content-center">
+              <button className="btn pe-5" onClick={handleShow}>
+                <FontAwesomeIcon icon={faPencilAlt} size="lg" />
+              </button>
+              <button
+                href="#"
+                className="btn ps-3"
+                onClick={handleDelete} // Abre el modal de eliminación en lugar de eliminar el contacto inmediatamente
+              >
+                <FontAwesomeIcon icon={faTrash} size="lg" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
       {/* Aquí va el código para el modal de edición de contactos */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -165,6 +175,20 @@ const Card = (props) => {
           </Button>
           <Button variant="primary" onClick={handleSave}>
             Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* Nuevo modal de eliminación */}
+      <Modal show={showDelete} onHide={() => setShowDelete(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sure u want to delete that Contact?</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDelete(false)}>
+            No
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Yes
           </Button>
         </Modal.Footer>
       </Modal>
