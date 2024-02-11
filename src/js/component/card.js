@@ -12,6 +12,8 @@ import { useContext } from "react";
 import { Context } from "../store/appContext"; // Asegúrate de importar tu contexto
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ModalForm from "./modalForm";
+import ModalDelete from "./modalDelete";
 
 const Card = (props) => {
   const { actions } = useContext(Context); // Obtén las acciones de tu contexto
@@ -121,77 +123,18 @@ const Card = (props) => {
           </div>
         </div>
       </div>
-      {/* Aquí va el código para el modal de edición de contactos */}
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Contact</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formFullName">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="full_name"
-                value={contact.full_name}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={contact.email}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formPhone">
-              <Form.Label>Phone</Form.Label>
-              <Form.Control
-                type="tel"
-                name="phone"
-                value={contact.phone}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formAddress">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                type="text"
-                name="address"
-                value={contact.address}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSave}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      {/* Nuevo modal de eliminación */}
-      <Modal show={showDelete} onHide={() => setShowDelete(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Sure u want to delete that Contact?</Modal.Title>
-        </Modal.Header>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDelete(false)}>
-            No
-          </Button>
-          <Button variant="danger" onClick={confirmDelete}>
-            Yes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalForm
+        show={show}
+        handleClose={handleClose}
+        contact={contact}
+        handleChange={handleChange}
+        handleSave={handleSave}
+      />
+      <ModalDelete
+        showDelete={showDelete}
+        setShowDelete={setShowDelete}
+        confirmDelete={confirmDelete}
+      />
     </div>
   );
 };
